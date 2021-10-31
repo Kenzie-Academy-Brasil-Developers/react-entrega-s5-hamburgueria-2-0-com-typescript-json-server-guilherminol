@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const Form = styled.form`
-  width: 500px;
+  width: 300px;
   height: 461px;
-  margin: 50px;
   border: 2px solid #f5f5f5;
   box-sizing: border-box;
   box-shadow: 0px 0px 30px -20px rgba(0, 0, 0, 0.25);
@@ -33,14 +32,23 @@ export const Form = styled.form`
     line-height: 18px;
     text-align: center;
     width: 327px;
+    max-width: 90%;
+    margin: 0 auto;
     color: #999999;
+  }
+  @media (min-width: 768px) {
+    width: 500px;
+    margin: 50px;
   }
 `;
 
 export const Content = styled.div`
   min-height: 100vh;
   display: flex;
-  flex-direction: row-reverse;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  @media (min-width: 768px) {
+    flex-direction: row-reverse;
+  }
 `;

@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: 40px 0 0 5px;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 80px;
-  justify-content: space-between;
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+    margin: 40px 0 0 5px;
+    flex-direction: column;
+    width: 200px;
+    height: 80px;
+    justify-content: space-between;
+  } ;
 `;
 export const Line = styled.div`
   display: flex;
