@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     api.get("/products").then((response) => setProducts(response.data));
-  });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ authToken, Logout, SignIn, products }}>
