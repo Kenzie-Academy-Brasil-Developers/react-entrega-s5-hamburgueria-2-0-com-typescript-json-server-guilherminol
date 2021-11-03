@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const SignIn = (userData: SignInProps) => {
     api
-      .post("/users", userData)
+      .post("/login", userData)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         setAuthToken(response.data.token);

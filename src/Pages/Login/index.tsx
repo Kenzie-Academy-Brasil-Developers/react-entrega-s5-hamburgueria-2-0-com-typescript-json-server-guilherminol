@@ -1,7 +1,6 @@
 import { Form, Content } from "./styles";
 import { useHistory } from "react-router-dom";
 import PageBalls from "../../Components/PageBalls";
-import TextFieldComponent from "../../Components/TextField";
 import MainButton from "../../Components/MainButton";
 import SecondaryButton from "../../Components/SecondaryButton";
 import Logo from "../../Components/Logo";
@@ -9,12 +8,15 @@ import HomePagePhrase from "../../Components/HomePagePhrase";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuthContext } from "../../Providers/Auth";
+import { TextField } from "@material-ui/core";
 
 interface OnSubmitProps {
   email: string;
   password: string;
 }
 const Login = () => {
+  const { SignIn } = useAuthContext();
   const history = useHistory();
   const formSchema = yup.object().shape({
     email: yup.string().required("Email Obrigatório"),
@@ -24,12 +26,15 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(formSchema),
   });
   const onSubmitFunc = (data: OnSubmitProps) => {
     console.log(data);
+    // console.log(authToken);
+
+    SignIn(data);
   };
   return (
     <Content>
@@ -41,11 +46,27 @@ const Login = () => {
       <section>
         <Form onSubmit={handleSubmit(onSubmitFunc)}>
           <h3>Login</h3>
-          <TextFieldComponent {...register("email")} label="Email" />
-          <TextFieldComponent {...register("password")} label="Senha" />
-          <MainButton>Logar</MainButton>
+          <TextField
+            variant="outlined"
+            required
+            {...register("email")}
+            label="Email"
+            fullWidth
+          />
+
+          <TextField
+            variant="outlined"
+            required
+            {...register("password")}
+            label="Senha"
+            fullWidth
+          />
+          <MainButton type="submit">Logar</MainButton>
           <p>Crie sua conta para saborear muitas delícias e matar sua fome</p>
-          <SecondaryButton onClick={() => history.push("/register")}>
+          <SecondaryButton
+            type="button"
+            onClick={() => history.push("/register")}
+          >
             Cadastrar
           </SecondaryButton>
         </Form>

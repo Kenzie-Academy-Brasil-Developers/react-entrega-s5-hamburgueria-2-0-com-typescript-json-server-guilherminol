@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 import { Button } from "./style";
-interface MainButtonProps {
+interface MainButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 const MainButton = ({ children, ...rest }: MainButtonProps) => {
