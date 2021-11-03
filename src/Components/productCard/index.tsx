@@ -20,7 +20,7 @@ const ProductCard = ({ product }: productCardProps) => {
       <Content>
         <h3>{product.name}</h3>
         <p>{product.category}</p>
-        <p>R$ {product.price}</p>
+        <p>R$ {product.price.toFixed(2)}</p>
         <SecondaryButton>Adicionar</SecondaryButton>
       </Content>
     </Container>
