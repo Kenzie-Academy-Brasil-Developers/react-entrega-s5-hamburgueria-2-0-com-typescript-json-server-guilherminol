@@ -1,4 +1,10 @@
-import { useContext, useState, createContext, ReactNode } from "react";
+import {
+  useContext,
+  useState,
+  createContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useHistory } from "react-router";
 import api from "../../Services/api";
 
@@ -9,10 +15,18 @@ interface SignInProps {
 interface AuthProviderProps {
   children: ReactNode;
 }
+interface Product {
+  category: string;
+  id: number;
+  img: string;
+  name: string;
+  price: number;
+}
 interface AuthContextInterface {
   SignIn: (SignInProps: SignInProps) => void;
   Logout: () => void;
   authToken: string;
+  products: Product[];
 }
 const AuthContext = createContext({} as AuthContextInterface);
 
@@ -22,6 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authToken, setAuthToken] = useState(
     localStorage.getItem("token") || ""
   );
+  const [products, setProducts] = useState([]);
 
   const SignIn = (userData: SignInProps) => {
     api
@@ -42,8 +57,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     history.push("/");
   };
 
+  useEffect(() => {
+    api.get("/products").then((response) => setProducts(response.data));
+  });
+
   return (
-    <AuthContext.Provider value={{ authToken, Logout, SignIn }}>
+    <AuthContext.Provider value={{ authToken, Logout, SignIn, products }}>
       {children}
     </AuthContext.Provider>
   );
