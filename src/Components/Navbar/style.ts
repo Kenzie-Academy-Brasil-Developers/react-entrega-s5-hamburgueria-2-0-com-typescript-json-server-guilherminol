@@ -63,3 +63,17 @@ export const SearchInput = styled.div`
     margin: auto;
   }
 `;
+export const IconsContainer = styled.div`
+  height: 100%;
+  margin: auto;
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    svg {
+      color: #bdbdbd;
+      font-size: 26px;
+      margin-left: 10px;
+    }
+  }
+`;

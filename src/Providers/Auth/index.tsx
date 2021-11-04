@@ -29,7 +29,9 @@ interface AuthContextInterface {
   Logout: () => void;
   authToken: string;
   products: Product[];
+  cart: Product[];
   setProducts: Dispatch<SetStateAction<never[]>>;
+  setCart: Dispatch<SetStateAction<never[]>>;
 }
 const AuthContext = createContext({} as AuthContextInterface);
 
@@ -40,6 +42,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.getItem("token") || ""
   );
   const [products, setProducts] = useState([]);
+
+  const [cart, setCart] = useState([]);
 
   const SignIn = (userData: SignInProps) => {
     api
@@ -68,7 +72,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ authToken, setProducts, Logout, SignIn, products }}
+      value={{
+        authToken,
+        setProducts,
+        Logout,
+        SignIn,
+        products,
+        cart,
+        setCart,
+      }}
     >
       {children}
     </AuthContext.Provider>

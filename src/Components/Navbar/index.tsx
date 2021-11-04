@@ -1,11 +1,12 @@
-import { Container, SearchInput } from "./style";
+import { Container, SearchInput, IconsContainer } from "./style";
 import { AiOutlineSearch } from "react-icons/ai";
 import Logo from "../Logo";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Badge } from "material-ui";
 import { AddShoppingCart } from "@material-ui/icons";
 import { MuiThemeProvider } from "material-ui/styles";
-
+import { useAuthContext } from "../../Providers/Auth";
+import { FiLogOut } from "react-icons/fi";
 interface Product {
   category: string;
   id: number;
@@ -30,6 +31,7 @@ const Navbar = ({ products, setSearchedProducts }: NavbarProps) => {
     );
     setSearch("");
   };
+  const { cart, Logout } = useAuthContext();
 
   return (
     <Container>
@@ -45,11 +47,18 @@ const Navbar = ({ products, setSearchedProducts }: NavbarProps) => {
             <AiOutlineSearch />
           </button>
         </SearchInput>
-        <MuiThemeProvider>
-          <Badge badgeContent={2}>
-            <AddShoppingCart />
-          </Badge>
-        </MuiThemeProvider>
+        <IconsContainer>
+          <MuiThemeProvider>
+            <button>
+              <Badge badgeContent={cart.length}>
+                <AddShoppingCart />
+              </Badge>
+            </button>
+          </MuiThemeProvider>
+          <button onClick={Logout}>
+            <FiLogOut />
+          </button>
+        </IconsContainer>
       </div>
     </Container>
   );
