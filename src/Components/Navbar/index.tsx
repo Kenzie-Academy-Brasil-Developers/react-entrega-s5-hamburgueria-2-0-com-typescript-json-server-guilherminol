@@ -18,9 +18,10 @@ interface Product {
 interface NavbarProps {
   products: Product[];
   setSearchedProducts: Dispatch<SetStateAction<Product[]>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const Navbar = ({ products, setSearchedProducts }: NavbarProps) => {
+const Navbar = ({ products, setSearchedProducts, setIsOpen }: NavbarProps) => {
   const [search, setSearch] = useState("");
 
   const filterProducts = () => {
@@ -49,7 +50,7 @@ const Navbar = ({ products, setSearchedProducts }: NavbarProps) => {
         </SearchInput>
         <IconsContainer>
           <MuiThemeProvider>
-            <button>
+            <button onClick={() => setIsOpen(true)}>
               <Badge badgeContent={cart.length}>
                 <AddShoppingCart />
               </Badge>
