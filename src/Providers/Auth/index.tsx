@@ -4,6 +4,8 @@ import {
   createContext,
   ReactNode,
   useEffect,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { useHistory } from "react-router";
 import api from "../../Services/api";
@@ -27,6 +29,7 @@ interface AuthContextInterface {
   Logout: () => void;
   authToken: string;
   products: Product[];
+  setProducts: Dispatch<SetStateAction<never[]>>;
 }
 const AuthContext = createContext({} as AuthContextInterface);
 
@@ -58,11 +61,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
-    api.get("/products").then((response) => setProducts(response.data));
+    api.get("/products").then((response) => {
+      setProducts(response.data);
+    });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authToken, Logout, SignIn, products }}>
+    <AuthContext.Provider
+      value={{ authToken, setProducts, Logout, SignIn, products }}
+    >
       {children}
     </AuthContext.Provider>
   );
