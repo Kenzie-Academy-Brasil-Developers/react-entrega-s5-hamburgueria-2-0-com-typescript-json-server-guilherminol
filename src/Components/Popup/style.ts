@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const Background = styled.div`
   background: rgba(51, 51, 51, 0.5);
   width: 100%;
-  height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 1;
+  top: 0px;
+  bottom: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,13 +40,14 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
-  div {
+  .cartProductsContainer {
     background: #ffffff;
     border: 1px solid #f5f5f5;
     box-sizing: border-box;
     border-radius: 0px 0px 5px 5px;
     width: 500px;
-    height: 158px;
+    min-height: 158px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;

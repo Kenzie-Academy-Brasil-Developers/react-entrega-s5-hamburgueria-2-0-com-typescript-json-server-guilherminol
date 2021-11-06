@@ -1,5 +1,6 @@
 import { Container, Content } from "./style";
 import SecondaryButton from "../../Components/SecondaryButton";
+import { useAuthContext } from "../../Providers/Auth";
 interface Product {
   category: string;
   id: number;
@@ -11,7 +12,10 @@ interface productCardProps {
   product: Product;
 }
 const ProductCard = ({ product }: productCardProps) => {
-  console.log(product);
+  const { cart, setCart } = useAuthContext();
+  const addProduct = (item: Product) => {
+    setCart([...cart, item]);
+  };
   return (
     <Container>
       <div className="productImageContainer">
@@ -21,7 +25,9 @@ const ProductCard = ({ product }: productCardProps) => {
         <h3>{product.name}</h3>
         <p>{product.category}</p>
         <p>R$ {product.price.toFixed(2)}</p>
-        <SecondaryButton>Adicionar</SecondaryButton>
+        <SecondaryButton onClick={() => addProduct(product)}>
+          Adicionar
+        </SecondaryButton>
       </Content>
     </Container>
   );

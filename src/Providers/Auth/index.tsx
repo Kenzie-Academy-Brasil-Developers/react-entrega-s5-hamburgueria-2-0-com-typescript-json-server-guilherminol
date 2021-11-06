@@ -31,7 +31,8 @@ interface AuthContextInterface {
   products: Product[];
   cart: Product[];
   setProducts: Dispatch<SetStateAction<never[]>>;
-  setCart: Dispatch<SetStateAction<never[]>>;
+  setCart: any;
+  userId: number;
 }
 const AuthContext = createContext({} as AuthContextInterface);
 
@@ -42,8 +43,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.getItem("token") || ""
   );
   const [products, setProducts] = useState([]);
-
   const [cart, setCart] = useState([]);
+  const [userId, setUserId] = useState(-1);
 
   const SignIn = (userData: SignInProps) => {
     api
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem("token", response.data.token);
         setAuthToken(response.data.token);
         history.push("/dashboard");
+        setUserId(response.data.user.id);
       })
       .catch((error) => {
         console.log(error);
@@ -80,6 +82,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         products,
         cart,
         setCart,
+        userId,
       }}
     >
       {children}
