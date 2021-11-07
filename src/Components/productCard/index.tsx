@@ -13,9 +13,12 @@ interface productCardProps {
   product: Product;
 }
 const ProductCard = ({ product }: productCardProps) => {
-  const { cart, setCart } = useAuthContext();
+  const { cart, setCart, UpdateCart } = useAuthContext();
+
   const addProduct = (item: Product) => {
     setCart([...cart, item]);
+    const data = [...cart, item];
+    UpdateCart(data);
   };
   return (
     <Container>

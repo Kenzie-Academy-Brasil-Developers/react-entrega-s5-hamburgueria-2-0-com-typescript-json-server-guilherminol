@@ -33,6 +33,7 @@ interface AuthContextInterface {
   setProducts: Dispatch<SetStateAction<never[]>>;
   setCart: any;
   userId: number;
+  UpdateCart: (data: any) => void;
 }
 const AuthContext = createContext({} as AuthContextInterface);
 
@@ -44,7 +45,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [userId, setUserId] = useState(-1);
+  const [userId, setUserId] = useState(
+    Number(localStorage.getItem("userId")) || 0
+  );
 
   const SignIn = (userData: SignInProps) => {
     api
@@ -52,8 +55,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
         setAuthToken(response.data.accessToken);
-        history.push("/dashboard");
+        localStorage.setItem("userId", response.data.user.id);
         setUserId(response.data.user.id);
+        history.push("/dashboard");
         api.get("/cart");
         setCart(response.data.user.cart);
       })
@@ -74,11 +78,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(authToken);
-    const data = { cart: cart };
+  const UpdateCart = (data: Product[]) => {
+    const dataCart = { cart: data };
     api
-      .patch(`/users/${userId}`, data, {
+      .patch(`/users/${userId}`, dataCart, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((response) => {
@@ -87,7 +90,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [cart]);
+  };
 
   return (
     <AuthContext.Provider
@@ -100,6 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         cart,
         setCart,
         userId,
+        UpdateCart,
       }}
     >
       {children}
