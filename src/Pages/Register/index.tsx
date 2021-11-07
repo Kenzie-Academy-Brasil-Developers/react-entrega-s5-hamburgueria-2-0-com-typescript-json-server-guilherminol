@@ -41,6 +41,7 @@ const Register = () => {
       email,
       password,
       name,
+      cart: [],
     };
     api
       .post("/users", apiData)

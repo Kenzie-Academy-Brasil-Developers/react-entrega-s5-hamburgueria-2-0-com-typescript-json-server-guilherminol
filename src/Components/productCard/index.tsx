@@ -1,6 +1,7 @@
 import { Container, Content } from "./style";
 import SecondaryButton from "../../Components/SecondaryButton";
 import { useAuthContext } from "../../Providers/Auth";
+import api from "../../Services/api";
 interface Product {
   category: string;
   id: number;

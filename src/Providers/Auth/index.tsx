@@ -50,10 +50,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post("/login", userData)
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        setAuthToken(response.data.token);
+        localStorage.setItem("token", response.data.accessToken);
+        setAuthToken(response.data.accessToken);
         history.push("/dashboard");
         setUserId(response.data.user.id);
+        api.get("/cart");
+        setCart(response.data.user.cart);
       })
       .catch((error) => {
         console.log(error);
@@ -71,6 +73,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setProducts(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(authToken);
+    const data = { cart: cart };
+    api
+      .patch(`/users/${userId}`, data, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [cart]);
 
   return (
     <AuthContext.Provider
