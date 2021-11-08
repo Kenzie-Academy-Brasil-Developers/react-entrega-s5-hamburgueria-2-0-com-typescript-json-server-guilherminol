@@ -31,9 +31,6 @@ const Login = () => {
     resolver: yupResolver(formSchema),
   });
   const onSubmitFunc = (data: OnSubmitProps) => {
-    console.log(data);
-    // console.log(authToken);
-
     SignIn(data);
   };
   return (
