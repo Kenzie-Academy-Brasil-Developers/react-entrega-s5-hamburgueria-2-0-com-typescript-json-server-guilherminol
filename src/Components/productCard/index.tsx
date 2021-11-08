@@ -1,13 +1,13 @@
 import { Container, Content } from "./style";
 import SecondaryButton from "../../Components/SecondaryButton";
 import { useAuthContext } from "../../Providers/Auth";
-import api from "../../Services/api";
 interface Product {
   category: string;
   id: number;
   img: string;
   name: string;
   price: number;
+  quantity?: number;
 }
 interface productCardProps {
   product: Product;
@@ -16,9 +16,28 @@ const ProductCard = ({ product }: productCardProps) => {
   const { cart, setCart, UpdateCart } = useAuthContext();
 
   const addProduct = (item: Product) => {
-    setCart([...cart, item]);
-    const data = [...cart, item];
-    UpdateCart(data);
+    if (!cart.find((product) => product.id === item.id)) {
+      console.log(cart);
+      const newItem = { ...item, quantity: 1 };
+      console.log(newItem);
+      setCart([...cart, newItem]);
+      const data = [...cart, newItem];
+      UpdateCart(data);
+    } else {
+      const filteredCart = cart.filter((product) => {
+        return product.id !== item.id;
+      });
+      const cartItem = cart.filter((product) => {
+        return product.id === item.id;
+      });
+      const updatedItem = {
+        ...cartItem[0],
+        quantity: (cartItem[0].quantity || 1) + 1,
+      };
+      setCart([...filteredCart, updatedItem]);
+      const data = [...filteredCart, updatedItem];
+      UpdateCart(data);
+    }
   };
   return (
     <Container>

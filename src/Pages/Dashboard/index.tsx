@@ -21,8 +21,8 @@ const Dashboard = () => {
       />
       <ProductsListContainer>
         {searchedProducts.map((product, index) => (
-          <li>
-            <ProductCard key={index} product={product} />
+          <li key={index}>
+            <ProductCard product={product} />
           </li>
         ))}
       </ProductsListContainer>

@@ -23,6 +23,7 @@ interface Product {
   img: string;
   name: string;
   price: number;
+  quantity?: number;
 }
 interface AuthContextInterface {
   SignIn: (SignInProps: SignInProps) => void;
@@ -85,7 +86,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
       })
       .catch((err) => {
         console.log(err);

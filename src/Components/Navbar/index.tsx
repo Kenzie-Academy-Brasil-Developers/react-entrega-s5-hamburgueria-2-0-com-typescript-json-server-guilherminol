@@ -1,4 +1,9 @@
-import { Container, SearchInput, IconsContainer } from "./style";
+import {
+  Container,
+  SearchInput,
+  IconsContainer,
+  SearchInputMobile,
+} from "./style";
 import { AiOutlineSearch } from "react-icons/ai";
 import Logo from "../Logo";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -23,7 +28,7 @@ interface NavbarProps {
 
 const Navbar = ({ products, setSearchedProducts, setIsOpen }: NavbarProps) => {
   const [search, setSearch] = useState("");
-
+  const [isSearching, setIsSearching] = useState(false);
   const filterProducts = () => {
     setSearchedProducts(
       products.filter((product) =>
@@ -38,17 +43,35 @@ const Navbar = ({ products, setSearchedProducts, setIsOpen }: NavbarProps) => {
     <Container>
       <Logo />
       <div className="content">
+        {isSearching && (
+          <SearchInputMobile>
+            <input
+              value={search}
+              placeholder="Digitar Pesquisa"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <button onClick={filterProducts}>
+              <AiOutlineSearch />
+            </button>
+          </SearchInputMobile>
+        )}
+
         <SearchInput>
           <input
             value={search}
             placeholder="Digitar Pesquisa"
             onChange={(e) => setSearch(e.target.value)}
           />
+
           <button onClick={filterProducts}>
             <AiOutlineSearch />
           </button>
         </SearchInput>
         <IconsContainer>
+          <button className="btnSearch" onClick={() => setIsSearching(true)}>
+            <AiOutlineSearch />
+          </button>
           <MuiThemeProvider>
             <button onClick={() => setIsOpen(true)}>
               <Badge badgeContent={cart.length}>

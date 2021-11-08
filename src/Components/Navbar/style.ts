@@ -6,6 +6,12 @@ export const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  p {
+    font-size: 24px;
+    span {
+      font-size: 18px;
+    }
+  }
   .content {
     display: flex;
 
@@ -18,6 +24,11 @@ export const Container = styled.header`
     span {
       background-color: #27ae60 !important;
       color: #fff !important;
+    }
+  }
+  @media (max-width: 768px) {
+    input {
+      display: none;
     }
   }
 `;
@@ -62,10 +73,16 @@ export const SearchInput = styled.div`
     font-size: 24px;
     margin: auto;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const IconsContainer = styled.div`
   height: 100%;
   margin: auto;
+  .btnSearch {
+    display: none;
+  }
   button {
     border: none;
     background-color: transparent;
@@ -75,5 +92,21 @@ export const IconsContainer = styled.div`
       font-size: 26px;
       margin-left: 10px;
     }
+  }
+  @media (max-width: 768px) {
+    .btnSearch {
+      display: initial;
+    }
+  }
+`;
+export const SearchInputMobile = styled(SearchInput)`
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  width: 95%;
+  align-itens: center;
+  @media (max-width: 768px) {
+    display: flex;
   }
 `;
